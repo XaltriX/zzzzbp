@@ -8,32 +8,32 @@ TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "7413748827:AAHGW5KP6IhE3sUJPwdHAU
 
 #Your API ID & API HASH from my.telegram.org [https://youtu.be/gZQJ-yTMkEo?si=H4NlUUgjsIc5btzH]
 #Your API ID from my.telegram.org
-APP_ID = int(os.environ.get("APP_ID", "22505271"))
+APP_ID = int(os.environ.get("APP_ID", "24955235"))
 
 #Your API Hash from my.telegram.org
-API_HASH = os.environ.get("API_HASH", "c89a94fcfda4bc06524d0903977fc81e")
+API_HASH = os.environ.get("API_HASH", "f317b3f7bbe390346d8b46868cff0de8")
 
 #Your db channel Id
-CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002075726565"))
+CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002004278204"))
 
 #OWNER ID
-OWNER_ID = int(os.environ.get("OWNER_ID", "6695586027"))
+OWNER_ID = int(os.environ.get("OWNER_ID", "1837294444"))
 
 #Port
 PORT = os.environ.get("PORT", "8080")
 
 #Database  [https://youtu.be/qFB0cFqiyOM?si=fVicsCcRSmpuja1A]
-DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://Cluster0:Cluster0@cluster0.c07xkuf.mongodb.net/?retryWrites=true&w=majority")
-DB_NAME = os.environ.get("DATABASE_NAME", "Cluster0")
+DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://mhmdmcsd:Passw0rd1@cluster0.tuflupv.mongodb.net/?retryWrites=true&w=majority")
+DB_NAME = os.environ.get("DATABASE_NAME", "devil99")
 
 # Define your channel username or ID and join link
 #force sub channel id, if you want enable force sub or 0
 
-FORCE_SUB_CHANNEL = int(os.environ.get("FORCE_SUB_CHANNEL", "-1002192839022")) # Replace with your channel ID
+FORCE_SUB_CHANNEL = int(os.environ.get("FORCE_SUB_CHANNEL", "-1001980994910")) # Replace with your channel ID
 #FORCE_SUB_CHANNEL2 = int(os.environ.get("FORCE_SUB_CHANNEL2", "-1002043373014"))
 
 REQ_JOIN_LINK = os.environ.get("REQ_JOIN_LINK", "https://t.me/+jAhHR5pR-Uk4ZDU1")   # Replace with your channel join link
-#REQ_JOIN_LINK2 = os.environ.get("REQ_JOIN_LINK2", "https://t.me/+CtzZboehkKBmNmFk")
+#REQ_JOIN_LINK2 = os.environ.get("REQ_JOIN_LINK2", "https://t.me/+6WGrTovvmGBkZDE0")
 
 #Shortner (token system) 
 # check my discription to help by using my refer link of shareus.io
@@ -41,7 +41,7 @@ REQ_JOIN_LINK = os.environ.get("REQ_JOIN_LINK", "https://t.me/+jAhHR5pR-Uk4ZDU1"
 SHORTLINK_URL = os.environ.get("SHORTLINK_URL", "publicearn.com")
 SHORTLINK_API = os.environ.get("SHORTLINK_API", "3a316a64da231058d60e832717d6c32da304d12d")
 VERIFY_EXPIRE = int(os.environ.get('VERIFY_EXPIRE', 86400)) # Add time in seconds
-IS_VERIFY = os.environ.get("IS_VERIFY", "True")
+IS_VERIFY = os.environ.get("IS_VERIFY", "False")
 TUT_VID = os.environ.get("TUT_VID", "https://t.me/ultroid_official/18") # shareus ka tut_vid he 
 
 
@@ -49,10 +49,10 @@ TUT_VID = os.environ.get("TUT_VID", "https://t.me/ultroid_official/18") # shareu
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
 
 #start message
-START_MSG = os.environ.get("START_MESSAGE", "Hello {first}\n\nI can store private files in Specified Channel and other users can access it from special link.")
+START_MSG = os.environ.get("START_MESSAGE", "Hello {first}\n\nI can store private files in Specified Channel and other users can access it from special link. \n\n Owned By @NeonGhost_Network")
 try:
     ADMINS=[]
-    for x in (os.environ.get("ADMINS", "6695586027").split()):
+    for x in (os.environ.get("ADMINS", "1837294444").split()):
         ADMINS.append(int(x))
 except ValueError:
         raise Exception("Your Admins list does not contain valid integers.")
@@ -63,7 +63,7 @@ except ValueError:
 
 
 #Force sub message 
-FORCE_MSG = os.environ.get("FORCE_SUB_MESSAGE", "Hello {first}\n\n<b>You need to join in my Channel/Group to use me\n\nKindly Please join Channel</b>")
+FORCE_MSG = os.environ.get("FORCE_SUB_MESSAGE", "👋 Hello {first}!\n\n<b>🚀 You need to join our Channel/Group to use me!</b>\n\n👉 <b>Kindly, please join the Channel to continue.</b> 😊")
 
 #set your Custom Caption here, Keep None for Disable Custom Caption
 CUSTOM_CAPTION = os.environ.get("CUSTOM_CAPTION", None)
