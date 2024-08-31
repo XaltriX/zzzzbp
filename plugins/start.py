@@ -18,9 +18,12 @@ users_collection = db['ushhhers']
 join_requests_collection = db['join_requests']
 
 FORCE_SUB_CHANNELS = [
-    {"channel_id": -1002164052003, "join_link": 'https://t.me/+VVqMdLKfPxU1OGE1', "name": "Channel 1"},
-    {"channel_id": -1002226784896, "join_link": 'https://t.me/+GmQLgQf7AlkyODc1', "name": "Channel 2"},
-    {"channel_id": -1002172195934, "join_link": 'https://t.me/+FN4QvVUxXdk4ODU1', "name": "Channel 3"}
+    {"channel_id": -1002232256880, "join_link": 'https://t.me/+IkofzOQbZggwY2Rk', "name": "Channel"},
+    {"channel_id": -1002215614927, "join_link": 'https://t.me/+NbUsmPek-rM5NGQ0', "name": "Channel"},
+    {"channel_id": -1002241646915, "join_link": 'https://t.me/+E8EIcQ_YT3RiOTY0', "name": "Channel"},
+    {"channel_id": -1002197362187, "join_link": 'https://t.me/+PedSF1q-DDVkMDQ0', "name": "Channel"},
+    {"channel_id": -1002202432316, "join_link": 'https://t.me/+R-I3V3Ni_-U4YmU0', "name": "Channel"},
+    {"channel_id": -1002181039695, "join_link": 'https://t.me/+2Ev3G3Kg4ONkYzA0', "name": "Channel"}
 ]
 
 force_sub_channel_ids = [channel["channel_id"] for channel in FORCE_SUB_CHANNELS]
@@ -191,7 +194,7 @@ async def handle_join_request(client: Client, chat_join_request: ChatJoinRequest
             "timestamp": chat_join_request.date
         })
 
-    await client.send_message(chat_id=user_id, text="Your join request is received. You can now use the bot.")
+    await client.send_message(chat_id=user_id, text="🎉 Your Join Request is Received! 🎉\nYou can now use the bot without any issues.\n\n👉 Please click on the video link again to continue!")
 
 @Client.on_message(filters.command('users') & filters.private & filters.user(ADMINS))
 async def get_users(client: Client, message: Message):
