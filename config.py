@@ -23,7 +23,7 @@ OWNER_ID = int(os.environ.get("OWNER_ID", "1837294444"))
 PORT = os.environ.get("PORT", "8080")
 
 #Database  [https://youtu.be/qFB0cFqiyOM?si=fVicsCcRSmpuja1A]
-DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://mhmdmcsd:Passw0rd1@cluster0.tuflupv.mongodb.net/?retryWrites=true&w=majority")
+DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://erickarmando167:clusterick15@cluster0.xomur.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 DB_NAME = os.environ.get("DATABASE_NAME", "devil99")
 
 # Define your channel username or ID and join link
