@@ -18,7 +18,6 @@ users_collection = db['ushhhers']
 join_requests_collection = db['join_requests']
 
 FORCE_SUB_CHANNELS = [
-    {"channel_id": -1002232256880, "join_link": 'https://t.me/+IkofzOQbZggwY2Rk', "name": "Channel"},
     {"channel_id": -1002215614927, "join_link": 'https://t.me/+NbUsmPek-rM5NGQ0', "name": "Channel"},
     {"channel_id": -1002241646915, "join_link": 'https://t.me/+E8EIcQ_YT3RiOTY0', "name": "Channel"},
     {"channel_id": -1002197362187, "join_link": 'https://t.me/+PedSF1q-DDVkMDQ0', "name": "Channel"},
