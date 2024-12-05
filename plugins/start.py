@@ -19,10 +19,10 @@ join_requests_collection = db['join_requests']
 
 FORCE_SUB_CHANNELS = [
     {"channel_id": -1002215614927, "join_link": 'https://t.me/+NbUsmPek-rM5NGQ0', "name": "Channel"},
-    {"channel_id": -1002241646915, "join_link": 'https://t.me/+E8EIcQ_YT3RiOTY0', "name": "Channel"},
-    {"channel_id": -1002197362187, "join_link": 'https://t.me/+PedSF1q-DDVkMDQ0', "name": "Channel"},
-    {"channel_id": -1002202432316, "join_link": 'https://t.me/+R-I3V3Ni_-U4YmU0', "name": "Channel"},
-    {"channel_id": -1002181039695, "join_link": 'https://t.me/+2Ev3G3Kg4ONkYzA0', "name": "Channel"}
+    {"channel_id": -1002260868983, "join_link": 'https://t.me/+ZU0PWxXEgrdjZWFk', "name": "Channel"},
+    {"channel_id": -1002395794004, "join_link": 'https://t.me/+5h-GZwwQF_UyMTg0', "name": "Channel"},
+    {"channel_id": -1002446435441, "join_link": 'https://t.me/+8079mfXv6dAyOGY0', "name": "Channel"},
+    {"channel_id": -1002254301715, "join_link": 'https://t.me/+x7TMDIHPNhtkODA0', "name": "Channel"}
 ]
 
 force_sub_channel_ids = [channel["channel_id"] for channel in FORCE_SUB_CHANNELS]
