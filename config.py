@@ -17,7 +17,7 @@ API_HASH = os.environ.get("API_HASH", "f317b3f7bbe390346d8b46868cff0de8")
 CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1002004278204"))
 
 #OWNER ID
-OWNER_ID = int(os.environ.get("OWNER_ID", "1837294444"))
+OWNER_ID = int(os.environ.get("OWNER_ID", "5706788169"))
 
 #Port
 PORT = os.environ.get("PORT", "8080")
@@ -32,7 +32,7 @@ DB_NAME = os.environ.get("DATABASE_NAME", "devil99")
 FORCE_SUB_CHANNEL = int(os.environ.get("FORCE_SUB_CHANNEL", "-1001980994910")) # Replace with your channel ID
 #FORCE_SUB_CHANNEL2 = int(os.environ.get("FORCE_SUB_CHANNEL2", "-1002043373014"))
 
-REQ_JOIN_LINK = os.environ.get("REQ_JOIN_LINK", "https://t.me/+jAhHR5pR-Uk4ZDU1")   # Replace with your channel join link
+REQ_JOIN_LINK = os.environ.get("REQ_JOIN_LINK", "https://t.me/+nMwa8bGlKGdjZGY1")   # Replace with your channel join link
 #REQ_JOIN_LINK2 = os.environ.get("REQ_JOIN_LINK2", "https://t.me/+6WGrTovvmGBkZDE0")
 
 #Shortner (token system) 
@@ -63,7 +63,17 @@ except ValueError:
 
 
 #Force sub message 
-FORCE_MSG = os.environ.get("FORCE_SUB_MESSAGE", "👋 Hello {first}!\n\n<b>🚀 You need to join our Channel/Group to use me!</b>\n\n👉 <b>Kindly, please join the Channel to continue.</b> 😊")
+FORCE_MSG = os.environ.get(
+    "FORCE_SUB_MESSAGE",
+    "👋 Hello {first}!\n\n"
+    "<b>🚀 To use this bot, you must first join our Channel/Group.</b>\n"
+    "👉 <b>Please join the required Channel to continue.</b> 😊\n\n"
+    
+    "🇮🇳 <b>हिन्दी में:</b>\n"
+    "🙏 <b>इस बॉट का उपयोग करने के लिए आपको पहले हमारे चैनल/ग्रुप को जॉइन करना जरूरी है।</b>\n"
+    "👉 <b>कृपया आगे बढ़ने के लिए पहले चैनल को जॉइन करें।</b> 😊"
+)
+
 
 #set your Custom Caption here, Keep None for Disable Custom Caption
 CUSTOM_CAPTION = os.environ.get("CUSTOM_CAPTION", None)
