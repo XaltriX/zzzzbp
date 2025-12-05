@@ -18,11 +18,11 @@ users_collection = db['ushhhers']
 join_requests_collection = db['join_requests']
 
 FORCE_SUB_CHANNELS = [
-    {"channel_id": -1002393056772, "join_link": 'https://t.me/+-yCFraaOcptiN2Y9', "name": "Channel"},
-    {"channel_id": -1002260868983, "join_link": 'https://t.me/+ZU0PWxXEgrdjZWFk', "name": "Channel"},
-    {"channel_id": -1002395794004, "join_link": 'https://t.me/+5h-GZwwQF_UyMTg0', "name": "Channel"},
-    {"channel_id": -1002446435441, "join_link": 'https://t.me/+8079mfXv6dAyOGY0', "name": "Channel"},
-    {"channel_id": -1002254301715, "join_link": 'https://t.me/+x7TMDIHPNhtkODA0', "name": "Channel"}
+    {"channel_id": -1003491926285, "join_link": 'https://t.me/+0kP5s0qPFXUwNmZl', "name": "Channel"},
+    {"channel_id": -1003385348615, "join_link": 'https://t.me/+w-6R2EgAQHBlYjll', "name": "Channel"},
+    {"channel_id": -1003411454015, "join_link": 'https://t.me/+oY-Afu6fJwI5NWRl', "name": "Channel"},
+    {"channel_id": -1003462996661, "join_link": 'https://t.me/+dAOieK2Cy1I0ZWRl', "name": "Channel"},
+    {"channel_id": -1003457882724, "join_link": 'https://t.me/+ChPIPuckY1ZkOTI1', "name": "Channel"}
 ]
 
 force_sub_channel_ids = [channel["channel_id"] for channel in FORCE_SUB_CHANNELS]
