@@ -51,13 +51,38 @@ async def start_countdown(client: Client, user_id: int, chat_id: int):
             
             # Estimate wait time (position * 30 seconds average)
             estimated_time = max((position - 1) * 30, 0)
+            minutes = estimated_time // 60
+            seconds = estimated_time % 60
+            
+            # Create engaging progress bar
+            if position == 1:
+                progress_bar = "🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢"
+                status_emoji = "🎯"
+                status_text = "Almost your turn!"
+            elif position <= 3:
+                progress_bar = "🟢🟢🟢🟢🟢🟢🟢⚪⚪⚪"
+                status_emoji = "⚡"
+                status_text = "Get ready!"
+            elif position <= 5:
+                progress_bar = "🟢🟢🟢🟢🟢⚪⚪⚪⚪⚪"
+                status_emoji = "⏳"
+                status_text = "Moving forward..."
+            else:
+                progress_bar = "🟢🟢🟢⚪⚪⚪⚪⚪⚪⚪"
+                status_emoji = "⏰"
+                status_text = "Please wait..."
+            
+            time_str = f"{minutes}m {seconds}s" if minutes > 0 else f"{seconds}s"
             
             countdown_text = (
-                "⏳ <b>Preparing your access</b>\n\n"
-                f"📍 Queue position: <b>#{position}</b>\n"
-                f"⏱ Estimated time: <b>{estimated_time}s</b>\n\n"
-                "Please stay here and don't close this chat.\n"
-                "You'll be notified when it's your turn! 🔔"
+                f"⏳ <b>Queue Status</b> {status_emoji}\n\n"
+                f"{progress_bar}\n\n"
+                f"📍 Your Position: <b>#{position}</b>\n"
+                f"⏱ Estimated Wait: <b>{time_str}</b>\n"
+                f"💬 Status: <i>{status_text}</i>\n\n"
+                f"━━━━━━━━━━━━━━━━━━━━\n"
+                f"🔔 <b>Stay connected!</b> You'll be notified when it's your turn.\n"
+                f"⚡ <b>Tip:</b> Don't close this chat to avoid losing your spot!"
             )
             
             try:
