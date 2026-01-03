@@ -4,6 +4,7 @@ from datetime import datetime
 from typing import Optional
 from pyrogram import Client
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.enums import ParseMode
 from database.database import (
     get_user_session, update_user_state, get_queue_position,
     remove_from_queue, get_queue_message, set_queue_message,
@@ -29,7 +30,7 @@ async def start_countdown(client: Client, user_id: int, chat_id: int):
             chat_id=chat_id,
             text="⏳ <b>Preparing your access...</b>\n\n"
                  "Please wait while we process your request...",
-            parse_mode="html"
+            parse_mode=ParseMode.HTML
         )
         
         await set_queue_message(user_id, msg.id)
@@ -60,7 +61,7 @@ async def start_countdown(client: Client, user_id: int, chat_id: int):
             )
             
             try:
-                await msg.edit_text(countdown_text, parse_mode="html")
+                await msg.edit_text(countdown_text, parse_mode=ParseMode.HTML)
             except Exception as e:
                 logger.warning(f"Failed to update countdown for {user_id}: {e}")
                 break
@@ -122,7 +123,7 @@ async def activate_user(client: Client, user_id: int):
                     text="🟢 <b>Your turn has started!</b>\n\n"
                          "Please join the channels below by clicking the buttons.\n"
                          "After joining, verification will happen automatically.",
-                    parse_mode="html"
+                    parse_mode=ParseMode.HTML
                 )
                 await asyncio.sleep(1)
             except Exception as e:
@@ -174,7 +175,7 @@ async def activate_user(client: Client, user_id: int):
                  "After joining all, click 'I Joined All' button.\n\n"
                  "⚠️ You must actually REQUEST TO JOIN (not just click)!",
             reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode="html"
+            parse_mode=ParseMode.HTML
         )
         
         logger.info(f"Activated user {user_id} with channels: {channel_set}")
