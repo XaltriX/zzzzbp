@@ -15,7 +15,7 @@ from database.database import (
     get_user_session, create_user_session, update_user_state,
     save_join_request, check_all_join_requests, get_file_request,
     set_file_request, clear_user_session, get_channel_settings,
-    set_user_channel_set, get_unused_channel_set
+    set_user_channel_set, get_unused_channel_set, check_join_request
 )
 from queue_manager import (
     add_user_to_queue, is_user_busy, start_queue_processor
@@ -138,7 +138,7 @@ async def start_command(client: Client, message: Message):
     )
 
 # ==========================================
-# JOIN REQUEST HANDLER
+# JOIN REQUEST HANDLER - FIXED
 # ==========================================
 
 @Client.on_chat_join_request(filters.chat(force_sub_channel_ids))
@@ -164,28 +164,37 @@ async def handle_join_request(client: Client, chat_join_request: ChatJoinRequest
     
     # Only proceed if user is in ACTIVE state and this channel is in their set
     if state == 'ACTIVE' and channel_id in current_channels:
-        # Check if all channels joined
-        all_joined = await check_all_join_requests(user_id, current_channels)
+        # Check how many channels joined so far
+        joined_count = 0
+        for ch_id in current_channels:
+            if await check_join_request(user_id, ch_id):
+                joined_count += 1
         
-        if all_joined:
-            # Update state to waiting verification
-            await update_user_state(user_id, 'WAITING_VERIFICATION')
-            
+        total_required = len(current_channels)
+        remaining = total_required - joined_count
+        
+        if remaining > 0:
+            # Still more channels to join
             await client.send_message(
                 chat_id=user_id,
-                text="⏳ <b>Verifying your join requests...</b>\n\nPlease wait a moment...",
-                parse_mode=ParseMode.HTML
-            )
-            
-            # Start verification process
-            asyncio.create_task(verify_and_send_file(client, user_id))
-        else:
-            await client.send_message(
-                chat_id=user_id,
-                text=f"✅ Join request for <b>{chat_join_request.chat.title}</b> received!\n\n"
+                text=f"✅ <b>Join request received!</b>\n\n"
+                     f"📊 Progress: {joined_count}/{total_required} channels joined\n"
+                     f"📢 Remaining: <b>{remaining}</b> channel(s)\n\n"
                      f"Please join the remaining channels.",
                 parse_mode=ParseMode.HTML
             )
+        else:
+            # All channels joined - auto verify
+            await client.send_message(
+                chat_id=user_id,
+                text="✅ <b>All channels joined!</b>\n\n"
+                     "⏳ Verifying your requests...\nPlease wait a moment...",
+                parse_mode=ParseMode.HTML
+            )
+            
+            # Update state and start verification
+            await update_user_state(user_id, 'WAITING_VERIFICATION')
+            asyncio.create_task(verify_and_send_file(client, user_id))
     else:
         # Generic confirmation
         await client.send_message(
@@ -194,13 +203,13 @@ async def handle_join_request(client: Client, chat_join_request: ChatJoinRequest
         )
 
 # ==========================================
-# VERIFICATION & FILE SENDING
+# VERIFICATION & FILE SENDING - FIXED
 # ==========================================
 
 async def verify_and_send_file(client: Client, user_id: int):
     """Verify join requests and send file"""
     try:
-        # Small delay for Telegram to register join requests
+        # Wait for Telegram to process join requests
         await asyncio.sleep(3)
         
         session = await get_user_session(user_id)
@@ -209,15 +218,23 @@ async def verify_and_send_file(client: Client, user_id: int):
         
         current_channels = session.get('current_channel_set', [])
         
-        # Verify all join requests
+        # Verify ALL join requests
         all_verified = await check_all_join_requests(user_id, current_channels)
         
         if not all_verified:
+            # Find missing channels
+            missing = []
+            for ch_id in current_channels:
+                if not await check_join_request(user_id, ch_id):
+                    channel = next((c for c in FORCE_SUB_CHANNELS if c['channel_id'] == ch_id), None)
+                    if channel:
+                        missing.append(channel['name'])
+            
             await client.send_message(
                 chat_id=user_id,
-                text="❌ <b>Verification failed!</b>\n\n"
-                     "Please make sure you've sent join requests to all channels.\n"
-                     "Click the buttons again and try once more.",
+                text=f"❌ <b>Verification incomplete!</b>\n\n"
+                     f"Missing channels: {', '.join(missing)}\n\n"
+                     f"Please send join requests to ALL channels and click 'I Joined All' button again.",
                 parse_mode=ParseMode.HTML
             )
             await update_user_state(user_id, 'ACTIVE')
@@ -228,7 +245,8 @@ async def verify_and_send_file(client: Client, user_id: int):
         
         await client.send_message(
             chat_id=user_id,
-            text="✅ <b>Verified successfully!</b>\n\nSending your file(s)...",
+            text="✅ <b>Verified successfully!</b>\n\n"
+                 "📂 Sending your file(s)... Please wait...",
             parse_mode=ParseMode.HTML
         )
         
@@ -304,7 +322,24 @@ async def verify_and_send_file(client: Client, user_id: int):
         
         # Start soft wait period
         await update_user_state(user_id, 'SOFT_WAIT')
+        
+        # Send soft wait notification
+        await client.send_message(
+            chat_id=user_id,
+            text=f"⏳ <b>Please wait {SOFT_WAIT_TIME} seconds before your next request...</b>\n\n"
+                 f"This helps us serve everyone better! ⏱️",
+            parse_mode=ParseMode.HTML
+        )
+        
         await asyncio.sleep(SOFT_WAIT_TIME)
+        
+        # Send ready notification
+        await client.send_message(
+            chat_id=user_id,
+            text="🟢 <b>Ready for next request!</b>\n\n"
+                 "You can now request another file. Thank you for waiting! 🎉",
+            parse_mode=ParseMode.HTML
+        )
         
         # Clear session after soft wait
         await clear_user_session(user_id)
@@ -314,7 +349,14 @@ async def verify_and_send_file(client: Client, user_id: int):
         logger.error(f"Error in verify_and_send_file: {e}")
         await clear_user_session(user_id)
 
+# Continue in Part 2...
 # Part 2 of start.py - ADD THIS TO THE END OF PART 1
+
+# Import for admin panel
+from config import FORCE_SUB_CHANNELS
+
+# Import verify function (defined in Part 1)
+# verify_and_send_file is already defined above in Part 1
 
 # ==========================================
 # CALLBACK QUERY HANDLERS
@@ -322,7 +364,7 @@ async def verify_and_send_file(client: Client, user_id: int):
 
 @Client.on_callback_query(filters.regex("^verify_join_"))
 async def verify_join_callback(client: Client, callback_query: CallbackQuery):
-    """Handle 'I Joined All' button click"""
+    """Handle 'I Joined All' button click - FIXED"""
     user_id = callback_query.from_user.id
     
     session = await get_user_session(user_id)
@@ -334,9 +376,6 @@ async def verify_join_callback(client: Client, callback_query: CallbackQuery):
         return
     
     current_channels = session.get('current_channel_set', [])
-    
-    # Import here to avoid circular import
-    from database.database import check_join_request
     
     # Check if all join requests submitted
     all_joined = await check_all_join_requests(user_id, current_channels)
@@ -357,12 +396,16 @@ async def verify_join_callback(client: Client, callback_query: CallbackQuery):
         return
     
     # All joined - start verification
-    await callback_query.answer("✅ Verifying...", show_alert=False)
+    await callback_query.answer("✅ Verifying all channels...", show_alert=False)
     
-    await callback_query.message.edit_text(
-        "⏳ <b>Verifying your join requests...</b>\n\nPlease wait...",
-        parse_mode=ParseMode.HTML
-    )
+    try:
+        await callback_query.message.edit_text(
+            "⏳ <b>Verifying your join requests...</b>\n\n"
+            "Please wait while we confirm all channels...",
+            parse_mode=ParseMode.HTML
+        )
+    except:
+        pass
     
     await update_user_state(user_id, 'WAITING_VERIFICATION')
     asyncio.create_task(verify_and_send_file(client, user_id))
