@@ -7,6 +7,7 @@ from database.database import (
     get_channel_settings, update_channel_setting,
     add_channel, remove_channel, toggle_channel
 )
+import asyncio
 
 logger = LOGGER(__name__)
 
