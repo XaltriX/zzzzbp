@@ -314,7 +314,6 @@ async def verify_and_send_file(client: Client, user_id: int):
         logger.error(f"Error in verify_and_send_file: {e}")
         await clear_user_session(user_id)
 
-# Continue in next artifact...
 # Part 2 of start.py - ADD THIS TO THE END OF PART 1
 
 # ==========================================
@@ -335,6 +334,9 @@ async def verify_join_callback(client: Client, callback_query: CallbackQuery):
         return
     
     current_channels = session.get('current_channel_set', [])
+    
+    # Import here to avoid circular import
+    from database.database import check_join_request
     
     # Check if all join requests submitted
     all_joined = await check_all_join_requests(user_id, current_channels)
