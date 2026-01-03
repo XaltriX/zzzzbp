@@ -1,4 +1,4 @@
-# Queue Management System for Force Join
+# Queue Management System for Force Join - FIXED VERSION
 import asyncio
 from datetime import datetime
 from typing import Optional
@@ -137,7 +137,7 @@ async def activate_user(client: Client, user_id: int):
         channels_count = settings.get('channels_per_request', 2)
         
         # Get unused channel set
-        from database.database import get_unused_channel_set
+        from database.database import get_unused_channel_set, set_user_channel_set
         channel_set = await get_unused_channel_set(user_id, FORCE_SUB_CHANNELS, channels_count)
         
         if not channel_set:
@@ -149,7 +149,6 @@ async def activate_user(client: Client, user_id: int):
             return
         
         # Save channel set
-        from database.database import set_user_channel_set
         await set_user_channel_set(user_id, channel_set)
         
         # Create join buttons
@@ -228,3 +227,9 @@ async def is_user_busy(user_id: int) -> tuple[bool, Optional[str]]:
         return True, messages.get(state, '⚠️ You are already in process.')
     
     return False, None
+
+# Import needed for queue_size
+async def get_queue_size():
+    """Get current queue size"""
+    from database.database import get_queue_size as db_get_queue_size
+    return await db_get_queue_size()
