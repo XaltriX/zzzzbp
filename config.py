@@ -50,8 +50,7 @@ FORCE_SUB_CHANNELS = [
     {"channel_id": -1003385348615, "join_link": 'https://t.me/+w-6R2EgAQHBlYjll', "name": "Channel 2", "enabled": True},
     {"channel_id": -1003411454015, "join_link": 'https://t.me/+oY-Afu6fJwI5NWRl', "name": "Channel 3", "enabled": True},
     {"channel_id": -1003462996661, "join_link": 'https://t.me/+dAOieK2Cy1I0ZWRl', "name": "Channel 4", "enabled": True},
-    {"channel_id": -1003457882724, "join_link": 'https://t.me/+ChPIPuckY1ZkOTI1', "name": "Channel 5", "enabled": True},
-    {"channel_id": -1003457882724, "join_link": 'https://t.me/+mA8snTad17JlODk0', "name": "Channel 6", "enabled": True}
+    {"channel_id": -1003457882724, "join_link": 'https://t.me/+ChPIPuckY1ZkOTI1', "name": "Channel 5", "enabled": True}
 ]
 
 # OLD force sub (not used anymore - kept for compatibility)
